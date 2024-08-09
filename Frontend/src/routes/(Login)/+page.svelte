@@ -11,9 +11,10 @@
     const handleLogin = () => {
         const allUsers = get(users);  
         const user = allUsers.find(u => u.email === email && u.password === password);
+        console.log(user);
 
         if (user) {
-            goto(`/Dashboard/${user.name}`);
+            goto(`/Dashboard/${user.username}`);
         } else {
             errorMessage = 'Invalid email or password';
         }
