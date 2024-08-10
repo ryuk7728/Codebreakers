@@ -1,23 +1,39 @@
 <!-- src/Signup.svelte -->
 <script>
-    import { users } from '../user.js';
     import { goto } from '$app/navigation';
 
     let username = '';
     let email = '';
     let password = '';
 
-    const handleSignup = () => {
+    const handleSignup = async () => {
         if (username && email && password) {
-            users.update(currentUsers => {
-                return [...currentUsers, { name, email, password }];
-            });
+            const newUser = { username, email, password, machines: [] };
 
-            // Clear the input fields after signup
-            username = '';
-            email = '';
-            password = '';
-            goto('/');
+            try {
+                const response = await fetch('http://localhost:3000/addUser', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newUser),
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Clear the input fields after successful signup
+                    username = '';
+                    email = '';
+                    password = '';
+                    goto('/');
+                } else {
+                    alert('Failed to sign up. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error during signup:', error);
+                alert('An error occurred during signup. Please try again.');
+            }
         } else {
             alert("Please fill in all fields.");
         }

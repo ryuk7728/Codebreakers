@@ -1,0 +1,13 @@
+[
+  {
+    "username": "Animesh",
+    "email": "a@gmail.com",
+    "password": "animesh",
+    "machines": [
+      {
+        "id": "123",
+        "name": "truck"
+      }
+    ]
+  }
+]
