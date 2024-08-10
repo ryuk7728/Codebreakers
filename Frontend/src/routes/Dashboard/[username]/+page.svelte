@@ -103,7 +103,7 @@
   {#if allUsers.length > 0}
     {#each allUsers as user, index}
         <div class="card">
-            <h2>{user.username}</h2>
+            <h2>Hello,{user.username}</h2>
             <button on:click={() => openModal(index)}>Add Machine</button>
   
             <!-- Displaying each machine as a card -->

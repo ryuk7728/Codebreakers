@@ -41,62 +41,164 @@
 </script>
 
 <style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: white;
+        font-family: 'Arial', sans-serif;
+        color: #333;
+        justify-content: center;
+        height: 100vh;
+        position: relative;
+    }
+
+    .container {
+        display: flex;
+        align-items: center;
+        background-color: white;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+    }
+
+    .left-side {
+        background-color: #FFCD11;
+        width: 31%; /* Similar width to login page */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 20px;
+        margin-left: 25px;
+        height: 729px;
+    }
+
+    .left-side .logo img {
+        max-width: 80%;
+        height: auto;
+        margin-left: 42px;
+    }
+
+    .left-side .text {
+        font-size: 2rem; /* Slightly increased font size */
+        font-weight: bold;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .right-side {
+        width: 30%; /* Similar width to login page */
+        padding: 40px;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        position: absolute;
+        left: 526px;
+    }
+
     form {
-        max-width: 300px;
-        margin: auto;
-        padding: 2rem;
-        border: 1px solid #ccc;
-        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
     }
 
-    label {
+    form label {
         display: block;
-        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
     }
 
-    input {
+    form input {
         width: 100%;
-        padding: 0.5rem;
-        margin-bottom: 1rem;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 5px;
         border: 1px solid #ccc;
-        border-radius: 5px;
+        font-size: 1rem;
     }
 
-    button {
-        padding: 0.5rem 1rem;
-        background-color: #007bff;
+    form button {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.2rem;
         color: white;
-        border: none;
+        background-color: #333;
         border-radius: 5px;
+        border: none;
+        margin-top: 20px;
         cursor: pointer;
+        transition: background-color 0.3s;
     }
 
-    button:hover {
-        background-color: #0056b3;
+    form button:hover {
+        background-color: #555;
     }
 
-    .container{
-        background-color: red;
+    .signup-info {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 1rem;
+    }
+
+    .signup-info a {
+        color: #FFCD11;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .signup-info a:hover {
+        text-decoration: underline;
+    }
+
+    #right-side {
+        height: 100vh;
+        width: 34%;
+        background-image: url("/img/constructionman.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        border-radius: 0 8px 8px 0;
+        position: absolute;
+        right: 0px;
     }
 </style>
 
-<form on:submit|preventDefault={handleSignup}>
+<body>
     <div class="container">
-    <label>
-        Name:
-        <input type="text" bind:value={username} placeholder="Enter your name" />
-    </label>
+        <div class="left-side">
+            <div class="logo">
+                <img src="/img/CATLogo.jpg" alt="logo">
+            </div>
+            <div class="text">
+                <p>"<br>BUILDING BETTER<br>"</p>
+            </div>
+        </div>
+        <div class="right-side">
+            <form on:submit|preventDefault={handleSignup}>
+                <label>
+                    Name:
+                    <input type="text" bind:value={username} placeholder="Enter your name" />
+                </label>
 
-    <label>
-        Email:
-        <input type="email" bind:value={email} placeholder="Enter your email" />
-    </label>
+                <label>
+                    Email:
+                    <input type="email" bind:value={email} placeholder="Enter your email" />
+                </label>
 
-    <label>
-        Password:
-        <input type="password" bind:value={password} placeholder="Enter your password" />
-    </label>
+                <label>
+                    Password:
+                    <input type="password" bind:value={password} placeholder="Enter your password" />
+                </label>
 
-    <button type="submit">Sign Up</button>
-</div>
-</form>
+                <button type="submit">Sign Up</button>
+
+                <p class="signup-info">Already have an account? <a href="/">Log In</a></p>
+            </form>
+        </div>
+        <div id="right-side"></div>
+    </div>
+</body>

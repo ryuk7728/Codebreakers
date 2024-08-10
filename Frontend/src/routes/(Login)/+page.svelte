@@ -18,7 +18,7 @@
             console.log(user);
 
             if (user) {
-                goto(`/Dashboard/${user.username}`);
+                goto('/Dashboard/${user.username}');
             } else {
                 errorMessage = 'Invalid email or password';
             }
@@ -46,23 +46,25 @@
         display: flex;
         min-height: 100vh;
         align-items: center;
-        justify-content: center;
+        /* justify-content: center; */
     }
 
     .left-side {
         background-color: #FFCD11;
-        width: 25%; /* Increase width to cover more of the left side */
+        width: 31%; /* Increase width to cover more of the left side */
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
         padding: 20px;
+        margin-left: 25px;
     }
 
     .left-side .logo img {
         max-width: 80%; /* Adjusted to ensure the image fits nicely within the wider column */
         height: auto;
+        margin-left: 42px;
     }
 
     .left-side .text {
@@ -78,6 +80,8 @@
         width: 30%;
         box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
+        position: absolute;
+        left: 526px;
     }
 
     .right .form .heading {
@@ -143,12 +147,14 @@
 
     #right-side {
         height: 100vh;
-        width: 35%;
+        width: 34%;
         background-image: url("/img/constructionman.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
         border-radius: 0 8px 8px 0;
+        position: absolute;
+        right: 0px;
     }
 </style>
 
