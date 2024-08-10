@@ -1,13 +1,20 @@
 from flask import Flask, jsonify, request
 import numpy as np
 import random
+from tensorflow.keras.models import load_model
+
 
 app = Flask(__name__)
 
 @app.route('/api', methods=['GET'])
 def get_parameters():
-    k = 8
+    k = 3
     api_input = request.args.get('type')
+    
+    model = load_model('trained_model.keras')
+    scaling_factors = np.array([65, 1800, 105, 10, 450, 4.7, 1800, 17, 65, 400, 15, 365, 125, 40])
+    scaling_factors = scaling_factors+50
+
 
     # Engine Parameters
     mu_oilpressure = 45
@@ -117,7 +124,7 @@ def get_parameters():
     if random.randint(1, k) == 1:
         hyd_pump = 125 + random.uniform(1, 20)
 
-    mu_airpressure = 10
+    mu_airpressure = 30
     sigma_airpressure = 5
     air_pressure = np.random.normal(mu_airpressure, sigma_airpressure)
     if air_pressure < 0:
@@ -125,35 +132,31 @@ def get_parameters():
     if random.randint(1, k) == 1:
         air_pressure = 20 - random.uniform(1, 5)
 
-    if api_input == "engine":
+    
+    x_test = np.loadtxt('x_test.txt')
+
+    random_number = random.randint(1, 100000)
+
+    x_testeg = x_test[random_number].reshape(1,14)
+    print(np.round(x_testeg,2))
+    x_testegscaled = x_testeg/scaling_factors
+
+    
+  
+
+    y_pred = np.round(model.predict(x_testegscaled),2)
+    xlist = x_testeg.tolist()
+    ylist = y_pred.tolist()
+    
+
+    if api_input == "data":
         return jsonify({
-            "eng_temp": eng_temp,
-            "eng_oilpressure": eng_oilpressure,
-            "eng_speed": eng_speed
+            "failure values": ylist[0],
+            "parameter values": xlist[0]
+            
         })
 
-    if api_input == "drive":
-        return jsonify({
-            "trans_pressure": trans_pressure,
-            "brake_control": brake_control,
-            "pedal_sens": pedal_sens
-        })
-
-    if api_input == "fuel":
-        return jsonify({
-            "water_fuel": water_fuel,
-            "fuel_temp": fuel_temp,
-            "fuel_level": fuel_level,
-            "fuel_pressure": fuel_pressure
-        })
-
-    if api_input == "misc":
-        return jsonify({
-            "exhaust_temp": exhaust_temp,
-            "air_pressure": air_pressure,
-            "sys_volt": sys_volt,
-            "hyd_pump": hyd_pump
-        })
+    
 
     return jsonify({"error": "Invalid input"}), 400
 
