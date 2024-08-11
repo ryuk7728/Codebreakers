@@ -18,7 +18,7 @@
             console.log(user);
 
             if (user) {
-                goto('/Dashboard/${user.username}');
+                goto(`/Dashboard/${user.username}`);
             } else {
                 errorMessage = 'Invalid email or password';
             }
