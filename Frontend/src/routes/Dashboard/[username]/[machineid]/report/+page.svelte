@@ -11,17 +11,17 @@
     { name: 'Engine Oil Pressure', thresholds: { min: 25, max: 65 } },
     { name: 'Engine Speed', thresholds: { max: 1800 } },
     { name: 'Engine Temperature', thresholds: { max: 105 } },
-    { name: 'Brake Control', thresholds: { min: 1 } },
+    { name: 'Brake Control', thresholds: { min: 1, max:10 } },
     { name: 'Transmission Pressure', thresholds: { min: 200, max: 450 } },
     { name: 'Pedal Sensor', thresholds: { max: 4.7 } },
     { name: 'Water Fuel', thresholds: { max: 1800 } },
-    { name: 'Fuel Level', thresholds: { min: 1 } },
+    { name: 'Fuel Level', thresholds: { min: 1, max:17 } },
     { name: 'Fuel Pressure', thresholds: { min: 35, max: 65 } },
     { name: 'Fuel Temperature', thresholds: { max: 400 } },
     { name: 'System Voltage', thresholds: { min: 12.0, max: 15.0 } },
     { name: 'Exhaust Gas Temperature', thresholds: { max: 365 } },
     { name: 'Hydraulic Pump Rate', thresholds: { max: 125 } },
-    { name: 'Air Filter Pressure Drop', thresholds: { min: 20 } },
+    { name: 'Air Filter Pressure Drop', thresholds: { min: 20, max:40 } },
   ];
 
  
@@ -73,7 +73,7 @@
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`/api/?type=data&email=${encodeURIComponent(userEmail)}&machine-id=${encodeURIComponent(machineId)}&machine-name=${encodeURIComponent(machineName)}`);
+      const response = await fetch(`/api/?type=data&email=${encodeURIComponent(userEmail)}&machineID=${encodeURIComponent(machineId)}&machineName=${encodeURIComponent(machineName)}`);
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
       const data = await response.json();
@@ -105,11 +105,11 @@
 
   const getFailureMessage = (failure) => {
     if (failure > 0.7) {
-      return 'Chances of failure is high. Immediate attention required.';
+      return 'Potential machine failure detected. Immediate attention required.';
     } else if (failure > 0.4) {
-      return 'Failure is medium. Please go to service centre.';
+      return 'Moderate risk of machine failure detected.Monitor closely and consider calling our service centre.';
     } else {
-      return 'Everything is fine.';
+      return 'Machine is Operational.No issues detected.';
     }
   };
 
@@ -170,7 +170,7 @@
                 },
                 y: {
                   beginAtZero: true,
-                  min: thresholds.min || 0,
+                  min: 0,
                   max: thresholds.max || Math.max(...parametersData.map(p => p.value)) * 1.1,
                   title: {
                     display: true,

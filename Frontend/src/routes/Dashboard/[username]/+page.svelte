@@ -81,19 +81,45 @@
         font-family: 'Arial', sans-serif;
         background-color: #f0f4f8;
         margin: 0;
+        padding: 0;
+    }
+
+    /* Navbar Styling */
+    .navbar {
+        background-color: #333;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        margin-left: 20px;
+        font-size: 1.2rem;
+        transition: color 0.2s;
+    }
+
+    .navbar a:hover {
+        color: #ffcd11;
+    }
+
+    .content {
         padding: 20px;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
         min-height: 100vh;
     }
 
-
-    h2 {
+    h2, h3 {
         margin-top: 0;
-        font-size: 1.5rem;
         color: #333;
-        text-align: center;
     }
   
     p {
@@ -118,16 +144,22 @@
   
     /* Machine card styling */
     .machine-card {
-        background: #f8f9fa;
-        padding: 15px;
-        margin: 10px 0;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        transition: box-shadow 0.2s;
+        background: #fff;
+        padding: 20px;
+        margin: 15px 0;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.2s, transform 0.2s;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        width: 100%;
+        max-width: 400px;
     }
 
     .machine-card:hover {
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
     }
 
     .machine-card h3 {
@@ -162,6 +194,9 @@
         border-radius: 10px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         z-index: 1000;
+        width: 100%;
+        max-width: 400px;
+        animation: fadeIn 0.3s ease-in-out;
     }
 
     /* Input field styling */
@@ -184,42 +219,61 @@
         from { opacity: 0; }
         to { opacity: 1; }
     }
+
+    .Logo{
+        padding-left: 100px;
+        width: 75px;
+    }
 </style>
 
 <body>
-    
-
-{#if loggedInUser}
-    <h2>Hello, {loggedInUser.username}</h2>
-    <button on:click={openModal}>Add Machine</button>
-
-    {#each loggedInUser.machines as machine (machine.id)}
-        <a href="/Dashboard/{loggedInUser.username}/{machine.id}/report" class="machine-card" style="text-decoration: none;">
-            <h3>{machine.name}</h3>
-            <p>ID: {machine.id}</p>
-        </a>
-    {/each}
-{/if}
-
-<!-- Modal for machine details input -->
-{#if showModal}
-    <div class="modal-background" on:click={closeModal}></div>
-    <div class="modal" role="dialog" aria-labelledby="modal-title">
-        <h2 id="modal-title">Add Machine</h2>
-        <label>
-            Machine ID:
-            <input type="text" bind:value={machineId} />
-        </label>
-        <label>
-            Machine Name:
-            <input type="text" bind:value={machineName} />
-        </label>
+    <!-- Navbar -->
+    <div class="navbar">
+        <img class="Logo" src="/img/CATLogo.jpg" alt="Logo">
         <div>
-            <button on:click={addMachine}>Submit</button>
-            <button on:click={closeModal}>Cancel</button>
+            <a href="/docs">Docs</a>
+            <a href="/">LogOut</a>
         </div>
+        
+            
     </div>
-{/if}
 
-    
+    <!-- Content -->
+    <div class="content">
+        {#if loggedInUser}
+            <h2>Welcome, {loggedInUser.username}</h2>
+
+            <button on:click={openModal}>Add Machine</button>
+        
+
+            <h2 style="padding-top:25px">Your Machines</h2>
+
+            {#each loggedInUser.machines as machine (machine.id)}
+                <a href="/Dashboard/{loggedInUser.username}/{machine.id}/report" class="machine-card">
+                    <h3>{machine.name}</h3>
+                    <p>ID: {machine.id}</p>
+                </a>
+            {/each}
+        {/if}
+    </div>
+
+    <!-- Modal for machine details input -->
+    {#if showModal}
+        <div class="modal-background" on:click={closeModal}></div>
+        <div class="modal" role="dialog" aria-labelledby="modal-title">
+            <h2 id="modal-title">Add Machine</h2>
+            <label>
+                Machine ID:
+                <input type="text" bind:value={machineId} />
+            </label>
+            <label>
+                Machine Name:
+                <input type="text" bind:value={machineName} />
+            </label>
+            <div>
+                <button on:click={addMachine}>Submit</button>
+                <button on:click={closeModal}>Cancel</button>
+            </div>
+        </div>
+    {/if}
 </body>

@@ -17,5 +17,50 @@
         "name": "innjn"
       }
     ]
+  },
+  {
+    "username": "Deveeswara",
+    "email": "ndeveesh@gmail.com",
+    "password": "Sarma@111",
+    "machines": [
+      {
+        "id": "123",
+        "name": "Tractor"
+      },
+      {
+        "id": "234",
+        "name": "car"
+      }
+    ]
+  },
+  {
+    "username": "Kavya",
+    "email": "kavyashree0107@gmail.com",
+    "password": "srujan",
+    "machines": [
+      {
+        "id": "0107",
+        "name": "excavator"
+      },
+      {
+        "id": "3047",
+        "name": "backhoeloader"
+      }
+    ]
+  },
+  {
+    "username": "Dev",
+    "email": "animeshkrish7@gmail.com",
+    "password": "animesh",
+    "machines": [
+      {
+        "id": "69",
+        "name": "Excavator Truck"
+      },
+      {
+        "id": "23",
+        "name": "backhoe_Loader"
+      }
+    ]
   }
 ]
